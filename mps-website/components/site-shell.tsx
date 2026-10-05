@@ -1,6 +1,9 @@
+import { Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowUpRight, ChevronDown } from "lucide-react";
+import { AuthButton } from "@/components/auth-button";
+import { getAuthProfile, type AuthProfile } from "@/lib/auth/session";
 
 const primaryLinks = [
   { href: "/about", label: "Tentang MPS" },
@@ -33,7 +36,7 @@ function Brand() {
   );
 }
 
-export function SiteHeader() {
+function SiteHeaderContent({ profile }: { profile: AuthProfile | null }) {
   return (
     <header className="site-header">
       <div className="container header-inner">
@@ -57,9 +60,12 @@ export function SiteHeader() {
             </div>
           </details>
         </nav>
-        <Link className="header-contact" href="/contact">
-          Kontak <ArrowUpRight size={15} aria-hidden="true" />
-        </Link>
+        <div className="header-actions">
+          <Link className="header-contact" href="/contact">
+            Kontak <ArrowUpRight size={15} aria-hidden="true" />
+          </Link>
+          <AuthButton profile={profile} />
+        </div>
         <details className="mobile-nav">
           <summary aria-label="Buka navigasi">
             <span />
@@ -74,10 +80,24 @@ export function SiteHeader() {
                 </Link>
               ),
             )}
+            <AuthButton profile={profile} mobile />
           </nav>
         </details>
       </div>
     </header>
+  );
+}
+
+async function AuthenticatedSiteHeader() {
+  const profile = await getAuthProfile();
+  return <SiteHeaderContent profile={profile} />;
+}
+
+export function SiteHeader() {
+  return (
+    <Suspense fallback={<SiteHeaderContent profile={null} />}>
+      <AuthenticatedSiteHeader />
+    </Suspense>
   );
 }
 

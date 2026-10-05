@@ -17,6 +17,28 @@
 </p>
 <br/>
 
+## MPS account access
+
+The application uses Supabase Auth sessions through `@supabase/ssr`. Students
+cannot self-register: in the Supabase Dashboard, disable **Allow new users to
+sign up** under Authentication settings. Create or invite accounts through a
+trusted administrator workflow; this project does not expose account
+provisioning.
+
+Set `NEXT_PUBLIC_SUPABASE_URL` and
+`NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` in `.env.local`. Server-side role checks
+also require `SUPABASE_SERVICE_ROLE_KEY`, because the application tables have
+Row Level Security enabled without client policies. Keep this key server-only:
+never prefix it with `NEXT_PUBLIC_` or expose it to browser code.
+
+Every authenticated account must have a matching `public.profiles` row whose
+`id` equals the Supabase Auth user ID and whose `role` is one of `student`,
+`admin`, `advisor`, or `super_admin`. Accounts without a valid profile are
+denied access. Students are routed to `/student/dashboard`, advisors to
+`/advisor/dashboard`, and admins and super admins to `/admin/dashboard`.
+Dashboard pages are protected by server-side profile checks; the dashboard
+features themselves are not implemented yet.
+
 ## Features
 
 - Works across the entire [Next.js](https://nextjs.org) stack
