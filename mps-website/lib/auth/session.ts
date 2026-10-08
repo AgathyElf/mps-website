@@ -1,7 +1,6 @@
 import "server-only";
 
 import { redirect } from "next/navigation";
-import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 import {
   canAccessDashboard,
@@ -36,8 +35,7 @@ export async function getAuthProfile(): Promise<AuthProfile | null> {
     return null;
   }
 
-  const admin = createAdminClient();
-  const { data: profile, error: profileError } = await admin
+  const { data: profile, error: profileError } = await supabase
     .from("profiles")
     .select("role, full_name")
     .eq("id", user.id)
