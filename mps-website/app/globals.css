@@ -432,6 +432,17 @@ summary:focus-visible {
   background: var(--green-dark);
 }
 
+.button-secondary {
+  border: 1px solid var(--line);
+  background: var(--white);
+  color: var(--green-dark);
+}
+
+.button-secondary:hover {
+  border-color: var(--green);
+  background: var(--green-light);
+}
+
 .text-link,
 .inline-link {
   display: inline-flex;
@@ -1205,6 +1216,62 @@ summary:focus-visible {
   color: var(--muted);
   font-size: 13px;
   line-height: 1.8;
+}
+
+.dashboard-student-page {
+  max-width: 960px;
+}
+
+.dashboard-student-page > h1 {
+  margin: 16px 0 28px;
+  font-family: var(--serif);
+  font-size: clamp(34px, 5vw, 52px);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+}
+
+.dashboard-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.dashboard-stat-card {
+  display: flex;
+  min-height: 172px;
+  flex-direction: column;
+  justify-content: center;
+  gap: 14px;
+  padding: 24px 22px;
+  border: 1px solid var(--line);
+  background: var(--white);
+  box-shadow: 0 10px 24px rgba(18, 40, 32, 0.02);
+}
+
+.dashboard-stat-label {
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.dashboard-stat-value {
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: clamp(30px, 4vw, 42px);
+  font-weight: 400;
+  line-height: 1;
+}
+
+.dashboard-stat-placeholder {
+  color: #7b7d70;
+}
+
+.dashboard-stat-note {
+  color: #7b7d70;
+  font-size: 11px;
+  line-height: 1.5;
 }
 
 .dashboard-footer {
